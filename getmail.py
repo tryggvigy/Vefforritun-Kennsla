@@ -8,6 +8,19 @@
 import email, argparse
 import getpass, imaplib
 import os, sys
+import base64, re
+
+#in case of attachments with non-ascii names
+def format_string(string):
+  encodedStrComponents = re.split('\?',string)
+
+  if(encodedStrComponents[0] == string):
+    return string
+
+  base64Str = encodedStr[3]
+
+  uft8Str = base64.b64decode(base64Str).decode('UTF-8')
+  return uft8Str
 
 
 def main():
@@ -73,7 +86,10 @@ def main():
               continue
           if part.get('Content-Disposition') is None:
               continue
-          fileName =  str(uniqueID) + part.get_filename()
+              
+          fileName = part.get_filename()
+          fileName = format_string(fileName)
+          fileName = str(uniqueID) +'__'+ fileName
           uniqueID = uniqueID + 1
 
           if bool(fileName):
