@@ -16,7 +16,6 @@ Why is node_modules/ included?
 Using getmail.py
 ----------------
 
-- **Current version does not support none ASCII characters in attatchment filenames!**
 - Forward your emails to a gmail account.
 - Put target emails into the starred folder.
 - Make sure you have IMAP enabled in your gmail settings.
