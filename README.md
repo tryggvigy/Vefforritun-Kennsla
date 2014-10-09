@@ -6,6 +6,7 @@ This repository contains tools created to help myself to grade students faster.
 The goal is to increase the workflow of grading students.
 
 The following tasks are automated by these scripts:
+
 1. Getting student assignments from  email attatchments 
 2. unzipping zip-files
 3. creating grading .txt file
