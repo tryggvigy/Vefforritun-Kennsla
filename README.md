@@ -37,7 +37,7 @@ getmail.py can not currently handle utf-8 strings in attatchment names. Pull req
 
 unzip.sh
 --------
-- can be run form getmail.py to automatically unzip email attatchemt zip files.
+- can be run from getmail.py to automatically unzip email attatchemt zip files.
 - TODO - add support for creating grading .txt files in each directory traversed.
 
 Stuff to come
