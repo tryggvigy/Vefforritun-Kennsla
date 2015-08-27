@@ -28,7 +28,6 @@ sendmail.py
 unzip.sh
 --------
 - Can be run from getmail.py to automatically unzip email attachment zip files.
-=======
 
 
 Stuff to come
