@@ -8,17 +8,29 @@
 import email, argparse
 import getpass, imaplib
 import os, sys
+import base64, re
 
+#in case of attachments with non-ascii names
+def format_string(string):
+  encodedStrComponents = re.split('\?',string)
+
+  if(encodedStrComponents[0] == string):
+    return string
+
+  base64Str = encodedStr[3]
+
+  uft8Str = base64.b64decode(base64Str).decode('UTF-8')
+  return uft8Str
 
 def main():
   script_dir = '.'
-  parser = argparse.ArgumentParser(description="""This program fetches email attatchments from a specified gmail accounts starred folder.
+  parser = argparse.ArgumentParser(description="""This program fetches email attachments from a specified gmail accounts starred folder.
                                                   Emails to fetch can be filtered with some of the flags shown below.
                                                   If no optional flags are used, then all emails from the starred folder are fetched.
                                                   """)
   parser.add_argument('-o','--outdir', help='output directory of fetched data.', required=True)
-  parser.add_argument('-s','--since', help='only fetch attatchments newer or equal than give date. ex: 9-Aug-2014', required=False)
-  parser.add_argument('-u','--unseen', action='store_true', help='only fetch attatchments of messages flaged as unseen.', required=False)
+  parser.add_argument('-s','--since', help='only fetch attachments newer or equal than give date. ex: 9-Aug-2014', required=False)
+  parser.add_argument('-u','--unseen', action='store_true', help='only fetch attachments of messages flaged as unseen.', required=False)
   parser._optionals.title = "flag arguments"
   args = vars(parser.parse_args())
 
@@ -35,8 +47,8 @@ def main():
 
   #userName = raw_input('Enter your Gmail username:')
   #passwd = getpass.getpass('Enter your password: ')
-  userName = 'tryggvigy'
-  passwd = 'ZM9y6r13'
+  userName = 'gmail user'
+  passwd = 'gmail pass'
 
 
   imapSession = imaplib.IMAP4_SSL('imap.gmail.com')
@@ -61,9 +73,9 @@ def main():
       print 'Error searching Inbox.'
       raise
 
-  uniqueID = 0 # this is to prevent attatchment overwriting if two attatchments have the same name.
-  should_run_postscript = True
+  uniqueID = 0 # this is to prevent attachment overwriting if two attachments have the same name.
   # Iterating over all emails
+
   for msgId in data[0].split():
       typ, messageParts = imapSession.fetch(msgId, '(RFC822)')
       if typ != 'OK':
@@ -79,7 +91,10 @@ def main():
           if part.get('Content-Disposition') is None:
               # print part.as_string()
               continue
-          fileName =  str(uniqueID) + part.get_filename()
+
+          fileName = part.get_filename()
+          fileName = format_string(fileName)
+          #fileName = str(uniqueID) +'__'+ fileName
           uniqueID = uniqueID + 1
 
           if bool(fileName):

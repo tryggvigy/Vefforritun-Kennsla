@@ -1,0 +1,6 @@
+node_modules/
+*.pyc
+info.txt
+.jshintrc
+gulpfile.js
+packages.json

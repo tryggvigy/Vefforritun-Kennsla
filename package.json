@@ -1,9 +1,12 @@
 {
   "private": true,
   "devDependencies": {
+    "express-generator": "^4.9.0",
     "gulp": "^3.8.7",
     "gulp-css-validator": "0.0.4",
+    "gulp-jshint": "^1.8.5",
     "gulp-util": "^3.0.0",
-    "gulp-w3cjs": "^0.2.0"
+    "gulp-w3cjs": "^0.2.0",
+    "jshint-stylish": "^1.0.0"
   }
 }

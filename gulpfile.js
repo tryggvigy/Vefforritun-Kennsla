@@ -34,6 +34,8 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var w3cHTML = require('gulp-w3cjs');
 var w3cCSS = require('gulp-css-validator');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');;
 
 //#########################################
 //################ TASKS ##################
@@ -56,6 +58,13 @@ gulp.task('validate-css-v1', function () {
         .pipe(w3cCSS());
 });
 
+//################### JS #################################
+gulp.task('lint', function() {
+    gulp.src([paths.base.any+'.js'])
+      .pipe(jshint('.jshintrc'))
+      .pipe(jshint.reporter('jshint-stylish'));
+});
+
 //---------------------------------------------------------------------------
 
 // Watch
@@ -73,6 +82,14 @@ gulp.task('watch', function() {
     changeEvent(evt);
     gulp.src(evt.path)
         .pipe(w3cCSS());
+  });
+
+  //JSHINT SAVED JS FILE
+  gulp.watch([paths.any+'.js'], function(evt) {
+    changeEvent(evt);
+    gulp.src(evt.path)
+      .pipe(jshint('.jshintrc'))
+      .pipe(jshint.reporter('jshint-stylish'));
   });
 });
 
