@@ -3,24 +3,12 @@ Vefforritun-Kennsla
 
 This repository contains tools created to help myself to grade students faster.
 
-The goal is to increase the workflow of grading students.
-
 The following tasks are automated by these scripts:
 
-1. Getting student assignments from  email attatchments
+1. Getting student assignments from  email attachments
 2. unzipping zip-files
 3. creating grading .txt file
-4. Sending emails back to students with grading info and review.
-
-
-Why is node_modules/ included?
-------------------------------
-
-- It is relatively small.
-- Custom "improvements" where made to the gulp-css-validator index.js file.
-
----
-
+4. Sending emails back to students with grading info and review
 
 Using getmail.py
 ----------------
@@ -34,19 +22,24 @@ Using getmail.py
 
 getmail.py can not currently handle utf-8 strings in attatchment names. Pull requests are most wellcome.
 
+sendmail.py
+-----------
+
+- Mass sends email to students containing grades and a review textfile.
+- Emails and grades are fetched from an .ods file.
+- Review is fetched from a directory with the same name as the email address.
+
 
 unzip.sh
 --------
-- can be run from getmail.py to automatically unzip email attatchemt zip files.
-- TODO - add support for creating grading .txt files in each directory traversed.
+- Can be run from getmail.py to automatically unzip email attachment zip files.
 
 Stuff to come
 --------------
 
-### sendmail.py
-- Mass sends email to students containing grades and a review textfile.
-- Emails and grades are fetched from an .ods file, (excel support could be added later)
-- Review is fetched from a directory with the same name as the email address.
+- Documentation on how to structure the .ODS file and how to use sendmail.py.
+- Grading proccess gulp tools like, validating html and css, jshint and more.
+
 
 License
 -------
