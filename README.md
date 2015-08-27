@@ -3,13 +3,6 @@ Vefforritun-Kennsla
 
 This repository contains tools created to help myself to grade students faster.
 
-The following tasks are automated by these scripts:
-
-1. Getting student assignments from  email attachments
-2. unzipping zip-files
-3. creating grading .txt file
-4. Sending emails back to students with grading info and review
-
 Using getmail.py
 ----------------
 
@@ -17,10 +10,12 @@ Using getmail.py
 - Put target emails into the starred folder.
 - Make sure you have IMAP enabled in your gmail settings.
 - Also make sure you change the access for settings for less secure apps to enabled:
-    - https://www.google.com/settings/security/lesssecureapps
+- https://www.google.com/settings/security/lesssecureapps
 - Run getmail.py.
 
 getmail.py can not currently handle utf-8 strings in attatchment names. Pull requests are most wellcome.
+
+
 
 sendmail.py
 -----------
@@ -33,6 +28,8 @@ sendmail.py
 unzip.sh
 --------
 - Can be run from getmail.py to automatically unzip email attachment zip files.
+=======
+
 
 Stuff to come
 --------------

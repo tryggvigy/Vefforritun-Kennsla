@@ -39,8 +39,6 @@ def main():
 
   if args['outdir'] not in os.listdir(script_dir):
       print '\nDirectory: '+args['outdir']+' not found.'
-      #os.mkdir(args['outdir'])
-      #print 'Creating ./'+args['outdir']+'/'
       print 'Aborting.'
       return
 
@@ -73,9 +71,9 @@ def main():
       print 'Error searching Inbox.'
       raise
 
-  uniqueID = 0 # this is to prevent attachment overwriting if two attachments have the same name.
+  uniqueID = 0 # prevent attachment overwriting if two attachments have the same name.
+  should_run_postscript = True
   # Iterating over all emails
-
   for msgId in data[0].split():
       typ, messageParts = imapSession.fetch(msgId, '(RFC822)')
       if typ != 'OK':
@@ -86,21 +84,19 @@ def main():
       mail = email.message_from_string(emailBody)
       for part in mail.walk():
           if part.get_content_maintype() == 'multipart':
-              # print part.as_string()
               continue
           if part.get('Content-Disposition') is None:
-              # print part.as_string()
               continue
 
           fileName = part.get_filename()
           fileName = format_string(fileName)
-          #fileName = str(uniqueID) +'__'+ fileName
+          fileName = str(uniqueID) +'__'+ fileName
           uniqueID = uniqueID + 1
 
           if bool(fileName):
               filePath = os.path.join(script_dir, args['outdir'], fileName)
               if not os.path.isfile(filePath) :
-                  print '[+] '+fileName
+                  print '[+] ' + fileName
                   fp = open(filePath, 'wb')
                   fp.write(part.get_payload(decode=True))
                   fp.close()
@@ -108,12 +104,6 @@ def main():
   imapSession.close()
   imapSession.logout()
   print 'Done.'
-
-  # run unzip.sh with the given argument in args['outdir'].
-  import subprocess
-
-  subprocess.call("./unzip.sh "+args['outdir'] , shell=True)
-
 
 if __name__ == '__main__':
   main()

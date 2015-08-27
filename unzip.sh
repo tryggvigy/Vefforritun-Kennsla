@@ -31,10 +31,9 @@ for file in *.zip;
           echo -e "${red}No .zip files in directory.\nAborting.${NS}"
           exit 0
         else
-          dir=$(basename "$file" .zip) # remove the .zip from the filename
+          dir=$(basename "$uniqueId$file" .zip) # remove the .zip from the filename
           mkdir "$dir"
           cd "$dir" && unzip ../"$file" && rm ../"$file" # unzip and remove file if successful
-          echo "" > UMSOGN.txt
           cd ..
           ((uniqueId++))
         fi
