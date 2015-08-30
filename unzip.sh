@@ -20,7 +20,7 @@ echo ""
 cd "$1" #change working directory to first argument provided to the script.
 
 # add a unique id to every folder extracted
-# in case some students named theyr zip folders by the same name.
+# in case some students named theyr zip folders the same name.
 # this also shows the order in which folders are extracted.
 declare -i uniqueId=1
 
@@ -34,6 +34,7 @@ for file in *.zip;
           dir=$(basename "$uniqueId$file" .zip) # remove the .zip from the filename
           mkdir "$dir"
           cd "$dir" && unzip ../"$file" && rm ../"$file" # unzip and remove file if successful
+          touch UMSOGN.txt
           cd ..
           ((uniqueId++))
         fi

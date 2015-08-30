@@ -33,30 +33,29 @@ def get_table_headings(table):
 	return table_headings
 
 def make_header(table):
-		vefforitun_str = table[0][0]
-		proj_nr_str = table[0][1]
+	vefforitun_str = table[0][0]
+	proj_nr_str = table[0][1]
 
-		heading = u"SJÁ VIÐHENGI FYRIR UMSÖGNINA ÞÍNA!\n\n"
-		heading = heading + vefforitun_str + '\t' + proj_nr_str + '\n\n'
+	heading = u"SJÁ VIÐHENGI FYRIR UMSÖGNINA ÞÍNA!\n\n"
+	heading = heading + vefforitun_str + '\t' + proj_nr_str + '\n\n'
 
-		info = ''
-		try:
-		 	info = table[0][2]
-		 	heading = heading + info + '\n\n'
-		except Exception, e:
-			print e
-		 	pass
+	info = ''
+	try:
+	 	info = table[0][2]
+	 	heading = heading + info + '\n\n'
+	except Exception, e:
+		# print '\n[!] No extra info attached, continuing...\n'
+		# no extra info specified, that's ok.
+	 	pass
 
-		heading = heading + u'Upplýsingar um einkunnagjöf:\n'
+	heading = heading + u'Upplýsingar um einkunnagjöf:\n'
 
-		table_headings = get_table_headings(table)
+	table_headings = get_table_headings(table)
 
-		for table_heading in table_headings :
-			heading = heading + table_heading.get('name') + ' ' + table_heading.get('percentage') + '\n'
+	for table_heading in table_headings :
+		heading = heading + table_heading.get('name') + ' ' + table_heading.get('percentage') + '\n'
 
-		return heading
-
-
+	return heading
 
 def get_student(student_id, table):
 	for row in table :
@@ -65,14 +64,9 @@ def get_student(student_id, table):
 
 def make_student_grade(student_id, table):
 	grades = u'Nemandi: ' + student_id + '\n'
-
 	table_headings = get_table_headings(table)
-
 	student = get_student(student_id, table)
 	student_name = student.pop(0) # pop the student name column, we will add that in later.
-	student_final_grade = student.pop()
-	einkun_str = student.pop()
-
 	i = 0
 	for table_heading in table_headings:
 		if table_heading.get('percentage') is not '' :
@@ -80,8 +74,11 @@ def make_student_grade(student_id, table):
 			i = i + 1
 		grades = grades + table_heading.get('name') + ' ' + table_heading.get('percentage') + '\n'
 
-	grades = grades + '\n' + einkun_str + ' ' + student_final_grade
+	# change the strign to float, divide by 10 and make into a string again
+	student_final_grade = float(student.pop()) / 10
+	student_final_grade = str(student_final_grade)
 
+	grades = grades + '\nEinkunn: ' + student_final_grade
 	return grades
 
 
@@ -122,8 +119,8 @@ def main():
 	doc = ODSReader(ODS_FILE)
 	table = doc.getSheet("Sheet1")
 
-	#print compose_email(table, 'vok2')
-	#print get_email_addresses(table)
+	print compose_email(table, 'trg8')
+	# print get_email_addresses(table)
 
 if __name__ == '__main__':
 	main()
